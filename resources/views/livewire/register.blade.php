@@ -1,23 +1,23 @@
 <div>
     <form wire:submit.prevent="register">
         <label for="name">name</label>
-        <input id="name" type="text" wire:model.defer="name"> <br>
+        <input id="name" type="text" wire:model.lazy="name"> <br>
         @error('name')
-            <div>{{ $message }}</div>
+            <div class="text-red-600">{{ $message }}</div>
         @enderror
 
         <label for="email">email</label>
-        <input id="email" type="email" wire:model.defer="email"> <br>
+        <input id="email" type="email" wire:model.lazy="email"> <br>
         @error('email')
-            <div>{{ $message }}</div>
+            <div class="text-red-600">{{ $message }}</div>
         @enderror
 
         <label for="password">password</label>
-        <input id="password" type="password" wire:model.defer="password"> <br>
+        <input id="password" type="password" wire:model.lazy="password"> <br>
         @error('password')
-            <div>{{ $message }}</div>
+            <div class="text-red-600">{{ $message }}</div>
         @enderror
-        
+
         <button>登録する</button>
     </form>
 </div>

@@ -15,8 +15,13 @@ class Register extends Component
     protected $rules =[
         'name' => 'required|string|max:255',
         'email' => 'required|string|max:255|email|unique:users',
-        'name' => 'required|string|min:8',
+        'password' => 'required|string|min:8',
     ];
+
+    public function updated($property)
+    {
+        $this->validateOnly($property);
+    }
 
     public function register()
     {
@@ -26,6 +31,9 @@ class Register extends Component
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
+
+        session()->flash('message', '登録できたお');
+        return to_route('livewire-test.index');
     }
 
     public function render()

@@ -9,6 +9,9 @@
 </head>
 <body>
     livewire TEST
+    @if (session()->has('message'))
+        <div>{{ session('message') }}</div>
+    @endif
     {{-- <livewire:counter /> --}}
     @livewire('counter')
     @livewireScripts
