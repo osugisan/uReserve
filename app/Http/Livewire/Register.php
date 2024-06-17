@@ -11,6 +11,7 @@ class Register extends Component
     public $name;
     public $email;
     public $password;
+    public $theme = 'light';
 
     protected $rules =[
         'name' => 'required|string|max:255',
