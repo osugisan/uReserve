@@ -54,7 +54,7 @@ class EventController extends Controller
             return $check;
         }
 
-        $startDate = EventService::joinDateAndTime($request['event_date'], $request['sart_time']);
+        $startDate = EventService::joinDateAndTime($request['event_date'], $request['start_time']);
         $endDate = EventService::joinDateAndTime($request['event_date'], $request['end_time']);
 
         Event::create([
@@ -78,7 +78,13 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        $event = Event::findOrFail($event->id);
+        $eventDate = $event->eventDate;
+        $startTime = $event->startTime;
+        $endTime = $event->endTime;
+
+        return view('manager.events.show',
+            compact('event', 'eventDate', 'startTime', 'endTime'));
     }
 
     /**
