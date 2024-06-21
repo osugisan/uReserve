@@ -3,6 +3,8 @@
 use App\Http\Controllers\LiveWireTestController;
 use App\Http\Controllers\AlpineTestController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\MypageController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,21 +22,30 @@ Route::get('/', function () {
     return view('calendar');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified'
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 Route::prefix('manager')
     ->middleware('can:manager-higher')
     ->group(function() {
         Route::get('events/past', [EventController::class, 'past'])->name('events.past');
         Route::resource('events', EventController::class);
+    });
+
+Route::middleware('can:user-higher')
+    ->group(function() {
+        Route::get('dashboard', [ReservationController::class, 'dashboard'])->name('dashboard');
+        Route::get('mypage', [MypageController::class, 'index'])->name('mypage.index');
+        Route::get('mypage/{id}', [MypageController::class, 'show'])->name('mypage.show');
+        Route::get('/{id}', [ReservationController::class, 'detail'])->name('events.detail');
+        Route::post('/{id}', [ReservationController::class, 'reserve'])->name('events.reserve');
     });
 
 Route::middleware('can:user-higher')
